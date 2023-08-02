@@ -1,11 +1,13 @@
 {
   "name": "kwil-extension",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
+  "type": "module",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "tsc -w",
+    "test": "node dist/index.js"
   },
   "dependencies": {
     "kwil-extensions": "^0.0.2",
