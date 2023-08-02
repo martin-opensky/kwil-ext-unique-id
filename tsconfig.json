@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "esModuleInterop": true,
+    "checkJs": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+  }
+}
