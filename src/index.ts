@@ -1,51 +1,31 @@
-import { ExtensionBuilder, MethodFn, InitializeFn, logFn } from "kwil-extensions";
-import * as fs from 'fs';
+import { ExtensionBuilder, InitializeFn } from 'kwil-extensions';
+import { generate } from './generate';
+import { logger } from './logger';
 
-const initialize: InitializeFn = async (metadata: Record<string, string>): Promise<Record<string, string>> => {
-    if (!metadata['round']) {
-        metadata['round'] = 'up';
-    }
-
-    if (metadata['round']!== 'up' && metadata['round'] !== 'down') {
-        throw new Error('round must be either up or down');
-    }
-
-    return metadata;
-}
-
-const divide: MethodFn = async ({ metadata, inputs }) => {
-    const x = inputs[0]?.toNumber();
-    const y = inputs[1]?.toNumber();
-
-    if(metadata['round'] === 'up') {
-        return Math.ceil(x / y);
-    } else {
-        return Math.floor(x / y);
-    }
-}
-
-const logger: logFn = (log: string) => {
-    fs.appendFileSync('logs.txt', log);
-}
+const initialize: InitializeFn = async (
+  metadata: Record<string, string>
+): Promise<Record<string, string>> => {
+  return metadata;
+};
 
 function startServer(): void {
-    const server = new ExtensionBuilder()
-        .named('math')
-        .withInitializer(initialize)
-        .withMethods({
-            divide
-        })
-        .withLoggerFn(logger)
-        .port('50051')
-        .build();
+  const server = new ExtensionBuilder()
+    .named('unique_id')
+    .withInitializer(initialize)
+    .withMethods({
+      generate,
+    })
+    .withLoggerFn(logger)
+    .port('50051')
+    .build();
 
-    process.on('SIGINT', () => {
-        server.stop();
-    });
+  process.on('SIGINT', () => {
+    server.stop();
+  });
 
-    process.on('SIGTERM', () => {
-        server.stop();
-    });
+  process.on('SIGTERM', () => {
+    server.stop();
+  });
 }
 
 startServer();
