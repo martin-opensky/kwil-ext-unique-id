@@ -26,6 +26,8 @@ const generate: MethodFn = async ({ metadata, inputs }) => {
 };
 
 function startServer(): void {
+  const port = process.env.EXTENSION_UNIQUE_ID_PORT || '50051';
+
   const server = new ExtensionBuilder()
     .named('unique_id')
     .withInitializer(initialize)
@@ -33,7 +35,7 @@ function startServer(): void {
       generate,
     })
     .withLoggerFn(logger)
-    .port('50051')
+    .port(port)
     .build();
 
   process.on('SIGINT', () => {

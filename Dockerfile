@@ -16,8 +16,8 @@ COPY . .
 # Build the application
 RUN yarn build
 
-# Expose port
-EXPOSE 50051
+# Expose ports for 3 different providers for testing
+EXPOSE 40051 50051 60051
 
 # Command to run the application
 CMD ["node", "dist/index.js"]
