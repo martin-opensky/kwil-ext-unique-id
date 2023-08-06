@@ -1,11 +1,12 @@
-database id_test;
+database helpers_test;
 
-use unique_id as unique_id;
+use helpers as helper;
 
 table messages {
   id text maxlen(21) primary notnull,
   message text notnull maxlen(100),
   wallet text notnull,
+  created_at text notnull,
   #wallet_index index(wallet)
 }
 
@@ -14,8 +15,9 @@ action select_messages () public {
 }
 
 action insert_message ($message) public {
-  $id = unique_id.generate();
+  $id = helper.id();
+  $date = helper.date();
 
   INSERT INTO messages
-  VALUES ($id, $message, @caller);
+  VALUES ($id, $message, @caller, $date);
 }
