@@ -2,7 +2,7 @@ import { MethodFn } from 'kwil-extensions';
 import { DateTime } from 'luxon';
 
 const date: MethodFn = async ({ metadata, inputs }) => {
-  const dateString = inputs[0].toString();
+  const dateString = inputs[0]?.toString();
 
   if (!dateString) {
     return DateTime.utc().toString(); // default is now
