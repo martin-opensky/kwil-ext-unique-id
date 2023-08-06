@@ -20,5 +20,5 @@ RUN yarn build
 EXPOSE 40051 50051 60051
 
 # Command to run the application
-CMD ["node", "dist/index.js"]
+CMD ["node", "dist/index.mjs"]
 
